@@ -10,5 +10,4 @@ router = APIRouter()
 
 @router.post("/users/", response_model=user_schema.UserResponse)
 async def create_user(user: user_schema.UserCreate, db: Session = Depends(get_db)):
-    print("Received user data:", user.dict())
     return await user_service.create_user(db, user)
