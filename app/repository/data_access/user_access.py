@@ -28,3 +28,8 @@ async def update_user_token(db: Session, user_id: str, token: str):
     db.commit()
 
 
+async def get_user_by_token(db: Session, token: str) -> User:
+    return db.execute(select(User).where(User.token == token)).scalar_one_or_none()
+
+
+
