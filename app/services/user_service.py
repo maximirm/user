@@ -32,7 +32,7 @@ async def update_user_token(db: Session, user_id: str, token: str):
 async def get_user_role(db: Session, token: str) -> UserResponse:
     user = await user_access.get_user_by_token(db, token)
     if user:
-        return UserResponse(role=user.role, token=user.token)
+        return UserResponse(role=user.role, token=user.token, id=user.id)
     raise HTTPException(
         status_code=404,
         detail=f"User with token {token} not found"

@@ -18,20 +18,21 @@ class User(UserBase):
     id: UUID4
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
 class UserResponse(BaseModel):
     role: int
     token: Optional[str]
+    id: UUID4
 
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
     @classmethod
     def from_user(cls, user: User):
-        return cls(role=user.role, token=user.token)
+        return cls(role=user.role, token=user.token, id=user.id)
 
 
 class UserLogin(BaseModel):

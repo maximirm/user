@@ -23,8 +23,8 @@ async def login_user(login_data: user_schema.UserLogin, db: Session = Depends(ge
     return JSONResponse(content={"token": token}, status_code=200)
 
 
-@router.get("/users/role/", response_model=user_schema.UserResponse)
-async def get_user_role(
+@router.get("/users/", response_model=user_schema.UserResponse)
+async def get_user(
         authorization: str = Header(..., description="Authorization token"),
         db: Session = Depends(get_db)
 ):
