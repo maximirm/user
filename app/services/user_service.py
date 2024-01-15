@@ -50,6 +50,15 @@ async def get_all_users(db: Session) -> List[user_schema.UserResponse]:
     return [user_schema.UserResponse.from_user(user) for user in users]
 
 
+async def delete_user(db, user_id):
+    result = await user_access.delete_user(db, user_id)
+    if result == 0:
+        raise HTTPException(
+            status_code=404,
+            detail=f"User with id {user_id} not found",
+        )
+
+
 def __hash_password(password: str) -> str:
     return hashlib.sha256(password.encode('utf-8')).hexdigest()
 

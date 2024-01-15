@@ -1,7 +1,7 @@
 from typing import List
 
 from fastapi import HTTPException
-from sqlalchemy import select, update
+from sqlalchemy import select, update, delete
 from sqlalchemy.orm import Session
 
 from app.repository.models.user_model import User
@@ -39,3 +39,10 @@ async def get_all_users(db: Session):
     if not users:
         return []
     return users
+
+
+async def delete_user(db, user_id):
+    result = db.execute(delete(User).where(User.id == user_id))
+    deleted_count = result.rowcount
+    db.commit()
+    return deleted_count
