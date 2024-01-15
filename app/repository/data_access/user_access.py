@@ -7,7 +7,7 @@ from app.repository.schemas import user_schema
 
 
 async def create_user(db: Session, user: user_schema.UserCreate):
-    existing_user = get_user_by_name(db, user.name)
+    existing_user = await get_user_by_name(db, user.name)
     if existing_user:
         raise HTTPException(
             status_code=400,

@@ -6,7 +6,7 @@ from pydantic import BaseModel, UUID4
 class UserBase(BaseModel):
     name: str
     password: str
-    role: int
+    role: str
     token: Optional[str] = None
 
 
@@ -22,10 +22,9 @@ class User(UserBase):
 
 
 class UserResponse(BaseModel):
-    role: int
+    role: str
     token: Optional[str]
     id: UUID4
-
 
     class Config:
         from_attributes = True
@@ -38,4 +37,3 @@ class UserResponse(BaseModel):
 class UserLogin(BaseModel):
     name: str
     password: str
-
