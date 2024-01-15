@@ -15,7 +15,7 @@ router = APIRouter()
 @router.post("/users/register/")
 async def register_user(user: user_schema.UserCreate, db: Session = Depends(get_db)):
     await user_service.register_user(db, user)
-    return JSONResponse(content="User created successfully", status_code=201)
+    return JSONResponse(content="User created successfully", status_code=200)
 
 
 @router.post("/users/login/")
