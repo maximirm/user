@@ -12,7 +12,7 @@ from app.services import user_service
 router = APIRouter()
 
 
-@router.post("/users/register")
+@router.post("/users/register/")
 async def register_user(user: user_schema.UserCreate, db: Session = Depends(get_db)):
     await user_service.register_user(db, user)
     return JSONResponse(content="User created successfully", status_code=201)
@@ -35,12 +35,12 @@ async def get_user(
     return await user_service.get_user(db, token)
 
 
-@router.get("/users/all", response_model=List[user_schema.UserResponse])
+@router.get("/users/all/", response_model=List[user_schema.UserResponse])
 async def get_all_users(db: Session = Depends(get_db)):
     return await user_service.get_all_users(db)
 
 
-@router.delete("/users/{user_id}", response_model=str)
+@router.delete("/users/{user_id}/", response_model=str)
 async def delete_user(user_id: UUID4, db: Session = Depends(get_db)):
     await user_service.delete_user(db, user_id)
     return JSONResponse(content=f"User with id {user_id} deleted successfully", status_code=200)
