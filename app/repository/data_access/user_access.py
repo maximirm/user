@@ -1,3 +1,5 @@
+from typing import List
+
 from fastapi import HTTPException
 from sqlalchemy import select, update
 from sqlalchemy.orm import Session
@@ -32,4 +34,8 @@ async def get_user_by_token(db: Session, token: str) -> User:
     return db.execute(select(User).where(User.token == token)).scalar_one_or_none()
 
 
-
+async def get_all_users(db: Session):
+    users = db.execute(select(User)).scalars().all()
+    if not users:
+        return []
+    return users

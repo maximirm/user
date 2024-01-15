@@ -1,3 +1,5 @@
+from typing import List
+
 from fastapi import APIRouter, Depends, Header
 from sqlalchemy.orm import Session
 from starlette.responses import JSONResponse
@@ -29,5 +31,9 @@ async def get_user(
         db: Session = Depends(get_db)
 ):
     token = authorization.split("Bearer ")[1]
-    return await user_service.get_user_role(db, token)
+    return await user_service.get_user(db, token)
 
+
+@router.get("/users/all", response_model=List[user_schema.UserResponse])
+async def get_all_users(db: Session = Depends(get_db)):
+    return await user_service.get_all_users(db)
