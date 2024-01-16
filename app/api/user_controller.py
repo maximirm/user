@@ -23,7 +23,7 @@ async def login_user(login_data: user_schema.UserLogin, db: Session = Depends(ge
     user = await user_service.authenticate_user(db, login_data)
     token = user_service.generate_token()
     await user_service.update_user_token(db, user.id, token)
-    return JSONResponse(content={"token": token}, status_code=200)
+    return await user_service.get_user(db, token)
 
 
 @router.get("/users/", response_model=user_schema.UserResponse)
