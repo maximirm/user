@@ -3,18 +3,14 @@ from typing import Optional
 from pydantic import BaseModel, UUID4
 
 
-class UserBase(BaseModel):
+class UserCreate(BaseModel):
     name: str
     password: str
     role: str
     token: Optional[str] = None
 
 
-class UserCreate(UserBase):
-    pass
-
-
-class User(UserBase):
+class User(UserCreate):
     id: UUID4
 
     class Config:
