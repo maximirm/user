@@ -5,18 +5,18 @@ from typing import List
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
-from app.repository.data_access import user_access
+from app.repository.data_access import user_repository
 from app.repository.schemas import user_schema
 from app.repository.schemas.user_schema import UserCreate, UserLogin, User, UserResponse
 
 
 async def register_user(db: Session, user: UserCreate):
     user.password = __hash_password(user.password)
-    await user_access.create_user(db, user)
+    await user_repository.create_user(db, user)
 
 
 async def authenticate_user(db: Session, login_data: UserLogin) -> User:
-    user = await user_access.get_user_by_name(db, login_data.name)
+    user = await user_repository.get_user_by_name(db, login_data.name)
     if user and __check_password(login_data.password, user.password):
         return user
     raise HTTPException(status_code=401, detail="Invalid credentials")
@@ -27,11 +27,11 @@ def generate_token() -> str:
 
 
 async def update_user_token(db: Session, user_id: str, token: str):
-    await user_access.update_user_token(db, user_id, token)
+    await user_repository.update_user_token(db, user_id, token)
 
 
 async def get_user(db: Session, token: str) -> UserResponse:
-    user = await user_access.get_user_by_token(db, token)
+    user = await user_repository.get_user_by_token(db, token)
     if user:
         return UserResponse.from_user(user)
     raise HTTPException(
@@ -41,7 +41,7 @@ async def get_user(db: Session, token: str) -> UserResponse:
 
 
 async def get_all_users(db: Session) -> List[user_schema.UserResponse]:
-    users = await user_access.get_all_users(db)
+    users = await user_repository.get_all_users(db)
     if not users:
         raise HTTPException(
             status_code=404,
@@ -51,7 +51,7 @@ async def get_all_users(db: Session) -> List[user_schema.UserResponse]:
 
 
 async def delete_user(db, user_id):
-    result = await user_access.delete_user(db, user_id)
+    result = await user_repository.delete_user(db, user_id)
     if result == 0:
         raise HTTPException(
             status_code=404,
