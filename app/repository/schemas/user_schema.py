@@ -14,6 +14,14 @@ class User(UserCreate):
     id: UUID4
 
 
+
+
+
+
+
+
+
+
 class UserResponse(BaseModel):
     id: UUID4
     name: str
