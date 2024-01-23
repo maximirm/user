@@ -13,9 +13,6 @@ class UserCreate(BaseModel):
 class User(UserCreate):
     id: UUID4
 
-    class Config:
-        from_attributes = True
-
 
 class UserResponse(BaseModel):
     id: UUID4
@@ -23,12 +20,14 @@ class UserResponse(BaseModel):
     role: str
     token: Optional[str]
 
-    class Config:
-        from_attributes = True
-
     @classmethod
     def from_user(cls, user: User):
-        return cls(id=user.id, name=user.name, role=user.role, token=user.token)
+        return cls(
+            id=user.id,
+            name=user.name,
+            role=user.role,
+            token=user.token
+        )
 
 
 class UserLogin(BaseModel):
