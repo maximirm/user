@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-SQLALCHEMY_DATABASE_URL = "postgresql://surveyuser:admin@localhost/userdb"
+SQLALCHEMY_DATABASE_URL = "postgresql://user:password@userdb:5432/userdb"
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL
